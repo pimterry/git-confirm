@@ -43,7 +43,7 @@ teardown() {
   run git commit -m "Content"
 
   assert_success
-  refute_line "my_file contains TODO"
+  refute_line --partial "my_file contains TODO:"
 }
 
 @test "Commit a file containing a TODO fails if the user rejects the prompt" {
@@ -54,7 +54,7 @@ teardown() {
   run git commit -m "Commit with TODO"
 
   assert_failure
-  assert_line "my_file contains TODO"
+  assert_line --partial "my_file contains TODO"
 }
 
 @test "Commit a file containing a TODO passes if the user accepts the prompt" {
@@ -65,5 +65,45 @@ teardown() {
   run git commit -m "Commit with TODO"
 
   assert_success
-  assert_line "my_file contains TODO"
+  assert_line --partial "my_file contains TODO"
+}
+
+@test "Includes changed line numbers in message" {
+  cat << EOF > file_to_commit
+start
+TODO
+end
+EOF
+  git add file_to_commit
+
+  echo "y" > $FAKE_TTY
+  run git commit -m "Commit with TODO"
+
+  assert_success
+  assert_line --partial "2:TODO"
+}
+
+@test "Includes only the changed line + context in message" {
+  cat << EOF > file_to_commit
+File start
+.
+.
+.
+.
+.
+.
+.
+line before
+TODO - add things
+line after
+EOF
+  git add file_to_commit
+
+  echo "y" > $FAKE_TTY
+  run git commit -m "Commit with TODO"
+
+  refute_line --partial "File start"
+  assert_line --partial "line before"
+  assert_line --partial "TODO - add things"
+  assert_line --partial "line after"
 }

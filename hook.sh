@@ -45,7 +45,8 @@ ask() {
 for FILE in `git diff-index -p -M --name-status HEAD | cut -c3-`; do
     grep 'TODO' $FILE 2>&1 >/dev/null
     if [ $? -eq 0 ]; then
-        echo "$FILE contains TODO"
+        echo -e "\n$FILE contains TODO:\n"
+        grep -n -C4 'TODO' $FILE
 
         if ask "Include this in your commit?"; then
             echo 'Including'
