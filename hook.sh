@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# If we have a STDIN, use it, otherwise get one
+if tty; then
+    TTY=$(tty)
+else
+    TTY=/dev/tty
+fi
+
 # http://djm.me/ask
 ask() {
     while true; do
@@ -18,8 +25,8 @@ ask() {
         # Ask the question (not using "read -p" as it uses stderr not stdout)
         echo -n "$1 [$prompt] "
 
-        # Read the answer (use /dev/tty in case stdin is redirected from somewhere else)
-        read REPLY </dev/tty
+        # Read the answer
+        read REPLY < "$TTY"
 
         # Default?
         if [ -z "$REPLY" ]; then
@@ -38,10 +45,11 @@ ask() {
 for FILE in `git diff-index -p -M --name-status HEAD | cut -c3-`; do
     grep 'TODO' $FILE 2>&1 >/dev/null
     if [ $? -eq 0 ]; then
-        echo "$FILE includes TODO"
-	if ask "Include this in your commit?"; then
+        echo "$FILE contains TODO"
+
+        if ask "Include this in your commit?"; then
             echo 'Including'
-	else
+        else
             echo "Not committing, because $FILE contains TODO"
             exit 1
         fi
