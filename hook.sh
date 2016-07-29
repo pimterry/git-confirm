@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # If we have a STDIN, use it, otherwise get one
-if tty; then
+if tty >/dev/null 2>&1; then
     TTY=$(tty)
 else
     TTY=/dev/tty
