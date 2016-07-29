@@ -20,6 +20,8 @@ setup() {
   # Set up a git repo
   cd $TMP_DIRECTORY
   git init
+  git config user.email "test@git-confirm"
+  git config user.name "Git Confirm Tests"
   git commit --allow-empty -m "Initial commit"
   cp "$BASE_DIR/hook.sh" ./.git/hooks/pre-commit
 }
