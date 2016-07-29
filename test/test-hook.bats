@@ -37,7 +37,7 @@ teardown() {
   cd $BATS_TEST_DIRNAME
 }
 
-@test "Can commit a normal file" {
+@test "Should let you make normal all-good commits" {
   echo "Some content" > my_file
   git add my_file
   run git commit -m "Content"
@@ -46,7 +46,7 @@ teardown() {
   refute_line --partial "my_file contains TODO:"
 }
 
-@test "Commit a file containing a TODO fails if the user rejects the prompt" {
+@test "Should reject commits containing a TODO if the user rejects the prompt" {
   echo "TODO - Add more content" > my_file
   git add my_file
 
@@ -57,7 +57,7 @@ teardown() {
   assert_line --partial "my_file contains TODO"
 }
 
-@test "Commit a file containing a TODO passes if the user accepts the prompt" {
+@test "Should accept commits containing a TODO if the user accepts the prompt" {
   echo "TODO - Add more content" > my_file
   git add my_file
 
@@ -68,7 +68,7 @@ teardown() {
   assert_line --partial "my_file contains TODO"
 }
 
-@test "Includes changed line numbers in message" {
+@test "Should includes changed line numbers in message" {
   cat << EOF > file_to_commit
 start
 TODO
@@ -83,7 +83,7 @@ EOF
   assert_line --partial "2:TODO"
 }
 
-@test "Includes only the changed line + context in message" {
+@test "Should includes only the changed line + context in message" {
   cat << EOF > file_to_commit
 File start
 .
