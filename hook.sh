@@ -7,6 +7,8 @@ else
     TTY=/dev/tty
 fi
 
+IFS=$'\n'
+
 # http://djm.me/ask
 ask() {
     while true; do
@@ -42,18 +44,31 @@ ask() {
     done
 }
 
-for FILE in `git diff-index -p -M --name-status HEAD | cut -c3-`; do
-    grep 'TODO' $FILE 2>&1 >/dev/null
-    if [ $? -eq 0 ]; then
-        echo -e "\n$FILE contains TODO:\n"
-        grep -n -C4 'TODO' $FILE
+check_file() {
+    local file=$1
+    local file_changes_with_context=$(git diff-index -U999999999 -p HEAD --cached --color=always -- $file)
+
+    # From the diff, get the green lines starting with '+' and including 'TODO'
+    local todo_additions=$(echo "$file_changes_with_context" | grep -C4 $'^\e\\[32m\+.*TODO')
+
+    if [ -n "$todo_additions" ]; then
+        echo -e "\n$file has new TODOs added:\n"
+
+        for todo_line in $todo_additions
+        do
+            echo "$todo_line"
+        done
 
         if ask "Include this in your commit?"; then
             echo 'Including'
         else
-            echo "Not committing, because $FILE contains TODO"
+            echo "Not committing, because $file contains TODO"
             exit 1
         fi
     fi
+}
+
+for FILE in `git diff-index -p -M --name-status HEAD | cut -c3-`; do
+    check_file $FILE
 done
 exit
