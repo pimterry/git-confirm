@@ -1,4 +1,4 @@
-# git-confirm
+# git-confirm [![Travis Build Status](https://img.shields.io/travis/pimterry/git-confirm.svg)](https://travis-ci.org/pimterry/git-confirm)
 Git hook to catch placeholders and temporary changes (TODO / @ignore) before you commit them.
 
 [![Asciicast DEMO](asciicast.gif)](https://asciinema.org/a/dc7dr433caze9f8p65bitqs77?speed=2&autoplay=1)
