@@ -1,6 +1,8 @@
 # git-confirm
 Git hook to catch placeholders and temporary changes (TODO / @ignore) before you commit them.
 
+[![Asciicast DEMO](asciicast.gif)](https://asciinema.org/a/dc7dr433caze9f8p65bitqs77?speed=2&autoplay=1)
+
 Git Confirm:
 
 * Stops you ever accidentally committing bad temporary changes.
