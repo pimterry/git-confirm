@@ -48,7 +48,7 @@ check_file() {
     local file=$1
     local match_pattern=$2
 
-    local file_changes_with_context=$(git diff-index -U999999999 -p HEAD --cached --color=always -- $file)
+    local file_changes_with_context=$(git diff -U999999999 -p --cached --color=always -- $file)
 
     # From the diff, get the green lines starting with '+' and including '$match_pattern'
     local matched_additions=$(echo "$file_changes_with_context" | grep -C4 $'^\e\\[32m\+.*'"$match_pattern")
@@ -79,7 +79,7 @@ if [ -z "$MATCH" ]; then
     MATCH='TODO'
 fi
 
-for file in `git diff-index -p -M --name-status HEAD | cut -c3-`; do
+for file in `git diff --cached -p --name-status | cut -c3-`; do
     for match_pattern in $MATCH
     do
         check_file $file $match_pattern
