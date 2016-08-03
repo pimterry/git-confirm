@@ -68,6 +68,15 @@ check_file() {
     fi
 }
 
+# Actual hook logic:
+
+MATCH=$(git config --get hooks.confirm.match)
+if [ -z "$MATCH" ]; then
+    echo "Git-Confirm: hooks.confirm.match not set, defaulting to 'TODO'"
+    echo 'Add matches with `git config hooks.confirm.match --add "string-to-match"`'
+    MATCH='TODO'
+fi
+
 for FILE in `git diff-index -p -M --name-status HEAD | cut -c3-`; do
     check_file $FILE
 done

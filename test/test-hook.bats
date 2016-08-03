@@ -132,3 +132,8 @@ EOF
   run git commit -m "Commit with TODO un-added"
   assert_success
 }
+
+@test "Complains if hooks.confirm.match is not set" {
+  run git commit --allow-empty -m "Empty commit"
+  assert_line --partial "hooks.confirm.match not set"
+}
