@@ -10,7 +10,7 @@ Git Confirm:
 * Only considers lines newly `add`ed and about to be committed, so no false positives.
 * Includes (diff-colorized) context with each match
 * Installs in any project with a single command
-* Is configurable to match anything, through standard git config
+* Is configurable to match any number of strings, through standard git config
 * Is well tested. See [tests/test-hook.bats](https://github.com/pimterry/git-confirm/blob/master/test/test-hook.bats#L40-L9999).
 * Works on Linux & OSX, with no dependencies (*maybe* Windows too, with compatible Bash. Testers and fixes welcome!)
 
@@ -41,10 +41,21 @@ check contents and the hash (against MD5 7d9389f6cf1a84b15dfb6ee592d1b961 for v0
 
 By default, git-confirm will catch and warn about lines including 'TODO' only.
 
-If you want to match a different pattern, use:
+If you want to match a different pattern, you can override this default and set your own patterns:
 
 ```bash
 git config --add hooks.confirm.match "TODO"
+```
+
+Note that all matches are case-sensitive by default.
+
+You can repeatedly add patterns, and each of them will be matched in turn. To get, remove or totally
+clear your config, use the standard [Git Config](https://git-scm.com/docs/git-config) commands:
+
+```bash
+git config --get-all hooks.confirm.match
+git config --unset hooks.confirm.match 'TODO'
+git config --unset-all hooks.confirm.match
 ```
 
 ## Contributing

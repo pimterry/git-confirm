@@ -159,3 +159,18 @@ EOF
   assert_failure
   assert_line --partial "my_file additions match 'FIXME'"
 }
+
+@test "Matches against multiple configured matchers" {
+  git config --add hooks.confirm.match "FIXME"
+  git config --add hooks.confirm.match "@ignore"
+
+  echo "FIXME" > fixme_file
+  echo "@ignore" > ignored_test_file
+  git add fixme_file ignored_test_file
+
+  echo "y" > $FAKE_TTY
+  run git commit -m "Add two bad matches"
+
+  assert_line --partial "fixme_file additions match 'FIXME'"
+  assert_line --partial "ignored_test_file additions match '@ignore'"
+}
