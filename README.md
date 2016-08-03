@@ -18,7 +18,7 @@ Git Confirm:
 In the root of your Git repository, run:
 
 ```bash
-curl https://cdn.rawgit.com/pimterry/git-confirm/v0.1.1/hook.sh > .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
+curl https://cdn.rawgit.com/pimterry/git-confirm/v0.2.0/hook.sh > .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
 ```
 (*Note the version number*)
 
@@ -35,7 +35,7 @@ git commit -m "Testing git confirm"
 *If you're security conscious, you may be reasonably suspicious of
 [curling executable files](https://www.seancassidy.me/dont-pipe-to-your-shell.html).
 Here you're on HTTPS throughout though, and you're not piping directly to execution so you can
-check contents and the hash (against MD5 7d9389f6cf1a84b15dfb6ee592d1b961 for v0.1.1) before using this, if you like.*
+check contents and the hash (against MD5 2ec1642e534491591113eff74be46be3 for v0.2.0) before using this, if you like.*
 
 ## To Configure
 
@@ -79,7 +79,8 @@ Need any ideas? Take a look at the Git Confirm [Huboard](https://huboard.com/pim
 
 ## Release process
 
-* Commit changes
+* Make changes
 * Update Curl version number and hash (`md5 ./hook.sh`) in README.
+* Commit everything
 * Tag with new version numbers (`git tag vX.Y.Z`)
 * Push including tags (`git push origin --tags`)
