@@ -1,5 +1,17 @@
 # git-confirm
-Git hook to catch placeholders and mistakes (TODO / @ignore) before you commit them
+Git hook to catch placeholders and temporary changes (TODO / @ignore) before you commit them.
+
+Git Confirm:
+
+* Stops you ever accidentally committing bad temporary changes.
+* Is interactive, checking each match with you so you can't miss it (and can still include it if you like).
+* Only considers lines newly `add`ed and about to be committed, so no false positives.
+* Includes (diff-colorized) context with each match
+* Installs in any project with a single command
+* Is configurable to match anything, through standard git config
+* Is well tested. See [tests/\*.bats](https://github.com/pimterry/git-confirm/blob/master/test/test-hook.bats#L40-L9999).
+* Works on Linux & OSX, with no dependencies (**maybe** Windows too, with compatible Bash. Testers and fixes welcome!)
+* Doesn't break non-interactive environments (e.g. commands sent over SSH, some Git UIs).
 
 ## To Install
 In the root of your Git repository, run:
