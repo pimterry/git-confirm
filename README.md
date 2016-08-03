@@ -13,7 +13,6 @@ Git Confirm:
 * Is configurable to match anything, through standard git config
 * Is well tested. See [tests/test-hook.bats](https://github.com/pimterry/git-confirm/blob/master/test/test-hook.bats#L40-L9999).
 * Works on Linux & OSX, with no dependencies (*maybe* Windows too, with compatible Bash. Testers and fixes welcome!)
-* Doesn't break non-interactive environments (e.g. commands sent over SSH, some Git UIs).
 
 ## To Install
 In the root of your Git repository, run:
