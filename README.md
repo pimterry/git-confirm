@@ -18,7 +18,7 @@ Git Confirm:
 In the root of your Git repository, run:
 
 ```bash
-curl https://cdn.rawgit.com/pimterry/git-confirm/v0.2.0/hook.sh > .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
+curl https://cdn.rawgit.com/pimterry/git-confirm/v0.2.1/hook.sh > .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
 ```
 (*Note the version number*)
 
@@ -35,7 +35,7 @@ git commit -m "Testing git confirm"
 *If you're security conscious, you may be reasonably suspicious of
 [curling executable files](https://www.seancassidy.me/dont-pipe-to-your-shell.html).
 Here you're on HTTPS throughout though, and you're not piping directly to execution so you can
-check contents and the hash (against MD5 2ec1642e534491591113eff74be46be3 for v0.2.0) before using this, if you like.*
+check contents and the hash (against MD5 04baf1f87974681a92ee7fe8c0aa3aaa for v0.2.1) before using this, if you like.*
 
 ## To Configure
 
