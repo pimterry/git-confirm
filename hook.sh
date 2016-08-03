@@ -75,7 +75,7 @@ check_file() {
 MATCH=$(git config --get-all hooks.confirm.match)
 if [ -z "$MATCH" ]; then
     echo "Git-Confirm: hooks.confirm.match not set, defaulting to 'TODO'"
-    echo 'Add matches with `git config hooks.confirm.match --add "string-to-match"`'
+    echo 'Add matches with `git config --add hooks.confirm.match "string-to-match"`'
     MATCH='TODO'
 fi
 
