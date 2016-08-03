@@ -45,3 +45,29 @@ If you want to match a different pattern, use:
 ```bash
 git config --add hooks.confirm.match "TODO"
 ```
+
+## Contributing
+Want to file a bug? That's great! Please search issues first though to check it hasn't already been filed, and provide as much information as you can (your OS, terminal and Git-Confirm version as a minimum).
+
+Want to help improve Git-Confirm?
+
+* Check out the project:
+  `git clone --recursive https://github.com/pimterry/git-confirm.git`
+
+  (Note 'recursive' - this ensures submodules are included)
+* Check the tests pass locally: `./test.sh`
+* Add tests for your change in test/test-hook.bats
+
+  Check out the [BATS](https://github.com/sstephenson/bats) documentation if you're not familiar with it, or just crib from the existing tests.
+* Add any documentation required to this README.
+* Commit and push your changes
+* Open a PR!
+
+Need any ideas? Take a look at the Git Confirm [Huboard](https://huboard.com/pimterry/git-confirm#/) to quickly see the next features to look at.
+
+## Release process
+
+* Commit changes
+* Update Curl version number and hash (`md5 ./hook.sh`) in README.
+* Tag with new version numbers (`git tag vX.Y.Z`)
+* Push including tags (`git push origin --tags`)
