@@ -43,7 +43,7 @@ teardown() {
   run git commit -m "Content"
 
   assert_success
-  refute_line --partial "my_file has new TODOs added"
+  refute_line --partial "my_file additions match 'TODO'"
 }
 
 @test "Should reject commits containing a TODO if the user rejects the prompt" {
@@ -54,7 +54,7 @@ teardown() {
   run git commit -m "Commit with TODO"
 
   assert_failure
-  assert_line --partial "my_file has new TODOs added"
+  assert_line --partial "my_file additions match 'TODO'"
 }
 
 @test "Should accept commits containing a TODO if the user accepts the prompt" {
@@ -65,7 +65,7 @@ teardown() {
   run git commit -m "Commit with TODO"
 
   assert_success
-  assert_line --partial "my_file has new TODOs added"
+  assert_line --partial "my_file additions match 'TODO'"
 }
 
 @test "Should includes changed line numbers in message" {
@@ -135,5 +135,27 @@ EOF
 
 @test "Complains if hooks.confirm.match is not set" {
   run git commit --allow-empty -m "Empty commit"
+
+  assert_success
   assert_line --partial "hooks.confirm.match not set"
+}
+
+@test "Doesn't complain if hooks.confirm.match is set" {
+  git config --add hooks.confirm.match "FIXME"
+  run git commit --allow-empty -m "Empty commit"
+
+  assert_success
+  refute_line --partial "hooks.confirm.match not set"
+}
+
+@test "Uses different match from hooks.confirm.match if set" {
+  git config --add hooks.confirm.match "FIXME"
+
+  echo "FIXME" > my_file
+  git add my_file
+  echo "n" > $FAKE_TTY
+  run git commit --allow-empty -m "Commit including fix me"
+
+  assert_failure
+  assert_line --partial "my_file additions match 'FIXME'"
 }

@@ -46,23 +46,25 @@ ask() {
 
 check_file() {
     local file=$1
+    local match_pattern=$2
+
     local file_changes_with_context=$(git diff-index -U999999999 -p HEAD --cached --color=always -- $file)
 
-    # From the diff, get the green lines starting with '+' and including 'TODO'
-    local todo_additions=$(echo "$file_changes_with_context" | grep -C4 $'^\e\\[32m\+.*TODO')
+    # From the diff, get the green lines starting with '+' and including '$match_pattern'
+    local matched_additions=$(echo "$file_changes_with_context" | grep -C4 $"^\e\\[32m\+.*$match_pattern")
 
-    if [ -n "$todo_additions" ]; then
-        echo -e "\n$file has new TODOs added:\n"
+    if [ -n "$matched_additions" ]; then
+        echo -e "\n$file additions match '$match_pattern':\n"
 
-        for todo_line in $todo_additions
+        for matched_line in $matched_additions
         do
-            echo "$todo_line"
+            echo "$matched_line"
         done
 
         if ask "Include this in your commit?"; then
             echo 'Including'
         else
-            echo "Not committing, because $file contains TODO"
+            echo "Not committing, because $file matches $match_pattern"
             exit 1
         fi
     fi
@@ -78,6 +80,6 @@ if [ -z "$MATCH" ]; then
 fi
 
 for FILE in `git diff-index -p -M --name-status HEAD | cut -c3-`; do
-    check_file $FILE
+    check_file $FILE $MATCH
 done
 exit
