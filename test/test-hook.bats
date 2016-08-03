@@ -174,3 +174,16 @@ EOF
   assert_line --partial "fixme_file additions match 'FIXME'"
   assert_line --partial "ignored_test_file additions match '@ignore'"
 }
+
+@test "Support regex matches" {
+  git config --add hooks.confirm.match "hello.*world"
+
+  echo "hello crazy world" > my_code
+  git add my_code
+
+  echo "n" > $FAKE_TTY
+  run git commit -m "Commit code matching regex"
+
+  assert_failure
+  assert_line --partial "my_code additions match 'hello.*world'"
+}

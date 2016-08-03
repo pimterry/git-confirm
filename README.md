@@ -47,7 +47,7 @@ If you want to match a different pattern, you can override this default and set 
 git config --add hooks.confirm.match "TODO"
 ```
 
-Note that all matches are case-sensitive by default.
+Matches are passed verbatim to your local `grep`, and are treated as regular expressions. Note that all matches are case-sensitive.
 
 You can repeatedly add patterns, and each of them will be matched in turn. To get, remove or totally
 clear your config, use the standard [Git Config](https://git-scm.com/docs/git-config) commands:
