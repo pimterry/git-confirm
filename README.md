@@ -12,7 +12,7 @@ Git Confirm:
 * Installs in any project with a single command
 * Is configurable to match any number of strings, through standard git config
 * Is well tested. See [tests/test-hook.bats](https://github.com/pimterry/git-confirm/blob/master/test/test-hook.bats#L40-L9999).
-* Works on Linux & OSX, with no dependencies (*maybe* Windows too, with compatible Bash. Testers and fixes welcome!)
+* Works on Linux, OSX and Windows ([in Powershell at least](https://twitter.com/afnpires/status/768403583263973376)), with no dependencies.
 
 ## To Install
 In the root of your Git repository, run:
