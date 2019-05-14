@@ -9,80 +9,71 @@ fi
 
 IFS=$'\n'
 
-# http://djm.me/ask
-ask() {
-    while true; do
+get_review_action() {
+    start_lines=("You know nothing, Jon Snow." "Bend the knee and beg for mercy." "Dracarys!" "You chose fear.")
 
-        if [ "${2:-}" = "Y" ]; then
-            prompt="Y/n"
-            default=Y
-        elif [ "${2:-}" = "N" ]; then
-            prompt="y/N"
-            default=N
-        else
-            prompt="y/n"
-            default=
-        fi
+    # seed random generator
+    RANDOM=$$$(date +%s)
 
-        # Ask the question (not using "read -p" as it uses stderr not stdout)
-        echo -n "$1 [$prompt] "
-
-        # Read the answer
-        read REPLY < "$TTY"
-
-        # Default?
-        if [ -z "$REPLY" ]; then
-            REPLY=$default
-        fi
-
-        # Check if the reply is valid
-        case "$REPLY" in
-            Y*|y*) return 0 ;;
-            N*|n*) return 1 ;;
-        esac
-
-    done
+    # pick a random entry from the domain list to check against
+    current_starting_line=${start_lines[$RANDOM % ${#start_lines[@]}]}
+    echo "$current_starting_line" 
 }
 
-check_file() {
-    local file=$1
-    local match_pattern=$2
 
-    local file_changes_with_context=$(git diff -U999999999 -p --cached --color=always -- $file)
+update_xp(){
+    xp=$(git config --get hooks.xp)
+    if [ -z "$xp" ]; then
+        xp=100
+    fi
+    xp=$(($xp+$1))
+    git config --add hooks.xp "$xp"
+}
 
-    # From the diff, get the green lines starting with '+' and including '$match_pattern'
-    local matched_additions=$(echo "$file_changes_with_context" | grep -C4 $'^\e\\[32m\+.*'"$match_pattern")
+check_message() {
+    echo ""
+    echo  -e "\033[0;31mDaenerys is checking your commit message ..."
 
-    if [ -n "$matched_additions" ]; then
-        echo -e "\n$file additions match '$match_pattern':\n"
+    local message=$1 # refer as message to the first arg
+    # local message_string=$( cat "$message" ) # the actual string of the message
 
-        for matched_line in $matched_additions
+    # here collect the list of possible checks in 
+    # RegexCheck:Reason:ErrorCode format
+    local ChecksAndReasons=("^[A-Z]:Why aren't you starting the commit message with a capital letter like everyone else?:255"
+        "^(Add|Cut|Fix|Bump|Make|Start|Stop|Refactor|Reformat|Optimize|Document):Why do you want to invent a starting word for your commit? Use one of Add, Fix etc. that we usually use.:254"
+        "^(Add|Cut|Fix|Bump|Make|Start|Stop|Refactor|Reformat|Optimize|Document)(?!ed):Don't use past tense, your commit has not been accepted yet.:253"
+        "^.{1,50}(?!.):Seriously? You expected me to read this overly verbose commit message?:252")
+    
+    for KeyValPair in "${ChecksAndReasons[@]}"
         do
-            echo "$matched_line"
+            # let's split the list items to parts
+            pattern=`echo "$KeyValPair" | cut -d':' -f1`
+            reason=`echo "$KeyValPair" | cut -d':' -f2`
+            error_code=`echo "$KeyValPair" | cut -d':' -f3`
+
+            ### DEBUG part
+            # echo "$pattern $message_string"
+            # echo `head -1 "$message" | grep -P "$pattern" "$1"`
+            is_violating=$(! head -1 "$message" | grep -P "$pattern" "$1")
+            if [ -z "$is_violating" ]; then
+                # some check detected an error
+                action=$(get_review_action)
+                echo -e "\033[0;31m$action $reason Error code: $error_code" >&2
+                update_xp -5
+                echo -e "\033[0;31mFor this, you earned -5XP that means you have a total of ${xp}XP now."
+                exit $error_code
+            fi
+          
         done
 
-        if ask "Include this in your commit?"; then
-            echo 'Including'
-        else
-            echo "Not committing, because $file matches $match_pattern"
-            exit 1
-        fi
-    fi
+    ## all good
+    update_xp 1
+    echo -e "\033[0;31mMy sun and stars, I give you 1XP that means you have a total of ${xp}XP now."
+    
 }
 
 # Actual hook logic:
 
-MATCH=$(git config --get-all hooks.confirm.match)
-if [ -z "$MATCH" ]; then
-    echo "Git-Confirm: hooks.confirm.match not set, defaulting to 'TODO'"
-    echo 'Add matches with `git config --add hooks.confirm.match "string-to-match"`'
-    MATCH='TODO'
-fi
+# regex to validate in commit msg
 
-for file in `git diff --cached -p --name-status | cut -c3-`; do
-    for match_pattern in $MATCH
-    do
-        check_file $file $match_pattern
-    done
-done
-exit
+check_message $1

@@ -1,0 +1,11 @@
+Done:
+- Install Bats and add tests for regexes
+- Linus quotes for the no action word, long line, no capital
+- Gamification with XP collection
+
+Doing:
+
+Todo:
+- Gitmessage template
+- Try catching specific error codes in tests
+- Add Gamification levels
