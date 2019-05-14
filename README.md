@@ -25,7 +25,7 @@ All done. If you want to check it's installed correctly you can run:
 echo "TODO" > ./test-git-confirm
 git add ./test-git-confirm
 
-# Should prompt you to confirm added 'TODO'. Press 'n' to cancel commit.
+# Should get some surprise reprimand and cancel commit.
 git commit -m "not so nice commit message"
 ```
 
