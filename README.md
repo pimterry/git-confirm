@@ -10,7 +10,7 @@ Features:
 * Is easily extendable and custom themes can be added (the bease version is in the style of Linus Torwalds)
 * Is well tested. See [tests/test-hook.bats](https://github.com/pimterry/git-confirm/blob/master/test/test-hook.bats#L40-L9999).
 * Works on Linux, OSX and Windows ([in Powershell at least](https://twitter.com/afnpires/status/768403583263973376)).
-* It is based on the wonderful [git confirm by Tim Perry]((https://github.com/pimterry/git-confirm/)
+* It is based on the wonderful [git confirm by Tim Perry](https://github.com/pimterry/git-confirm/)
 
 ## To Install
 In the root of your Git repository, run:
