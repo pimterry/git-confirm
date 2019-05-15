@@ -1,6 +1,6 @@
 # The gamified git hook to check commit messages.
 
-![demo](snapshot.png)
+![demo](snapshot.gif)
 
 Features:
 
@@ -16,7 +16,7 @@ Features:
 In the root of your Git repository, run:
 
 ```bash
-curl https://github.com/agostontorok/LinusCommitMessageChecker/blob/master/hook.sh > .git/hooks/commit-msg && chmod +x .git/hooks/commit-msg
+curl https://cdn.rawgit.com/agostontorok/LinusCommitMessageChecker/v0.2.2/hook.sh > .git/hooks/commit-msg && chmod +x .git/hooks/commit-msg
 ```
 
 All done. If you want to check it's installed correctly you can run:
