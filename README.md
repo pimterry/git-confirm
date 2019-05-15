@@ -1,6 +1,6 @@
 # The gamified git hook to check commit messages.
 
-![demo](snapshot.gif)
+![demo](asciicast.gif)
 
 Features:
 
