@@ -1,4 +1,4 @@
-# The gamified git hook to check commit messages.
+# The gamified git hook to check commit messages. [![Build Status](https://travis-ci.org/agostontorok/LinusCommitMessageChecker.svg?branch=master)](https://travis-ci.org/agostontorok/LinusCommitMessageChecker)
 
 ![demo](asciicast.gif)
 
