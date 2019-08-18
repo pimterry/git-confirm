@@ -14,12 +14,17 @@ negative_start_lines=("Stop freaking around already. YOU DO NOT SEEM TO UNDERSTA
         "Seriously, WTF? I made the mistake your utter nonsense message." 
         "You know what? I just hate you, period.")
 
+positive_start_lines=("It's ok. Or did you expect cookies for making a nice commit message?"
+    "I'm sure it doesn't work or causes warnings for various reasons, but
+the commit message is a thing of beaty."
+"You are either a genius, or a seriously diseased mind.")
+
 get_quote() {
     # seed random generator
     RANDOM=$$$(date +%s)
-    ACTIONS=("$@")
+    quotes=("$@")
     # pick a random entry from the domain list to check against
-    current_starting_line=${ACTIONS[$RANDOM % ${#ACTIONS[@]}]}
+    current_starting_line=${quotes[$RANDOM % ${#quotes[@]}]}
     echo "$current_starting_line" 
 }
 
@@ -60,8 +65,8 @@ check_message() {
             is_violating=$(! head -1 "$message" | grep -P "$pattern" "$1")
             if [ -z "$is_violating" ]; then
                 # some check detected an error
-                action=$(get_quote "${negative_start_lines[@]}")
-                echo -e "\033[0;31m$action $reason Error code: $error_code" >&2
+                negative_quote=$(get_quote "${negative_start_lines[@]}")
+                echo -e "\033[0;31m$negative_quote $reason Error code: $error_code" >&2
                 update_xp -5
                 echo -e "\033[0;31mFor this, you earned -5XP that means you have a total of ${xp}XP now."
                 exit $error_code
@@ -71,7 +76,8 @@ check_message() {
 
     ## all good
     update_xp 1
-    echo -e "\033[0;31mMy sun and stars, I give you 1XP that means you have a total of ${xp}XP now."
+    positive_quote=$(get_quote "${positive_start_lines[@]}")
+    echo -e "\033[0;31m$positive_quote I give you 1XP that means you have a total of ${xp}XP now."
     
 }
 
