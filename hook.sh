@@ -14,7 +14,7 @@ negative_start_lines=("Stop freaking around already. YOU DO NOT SEEM TO UNDERSTA
         "Seriously, WTF? I made the mistake your utter nonsense message." 
         "You know what? I just hate you, period.")
 
-get_review_action() {
+get_quote() {
     # seed random generator
     RANDOM=$$$(date +%s)
     ACTIONS=("$@")
@@ -60,7 +60,7 @@ check_message() {
             is_violating=$(! head -1 "$message" | grep -P "$pattern" "$1")
             if [ -z "$is_violating" ]; then
                 # some check detected an error
-                action=$(get_review_action "${negative_start_lines[@]}")
+                action=$(get_quote "${negative_start_lines[@]}")
                 echo -e "\033[0;31m$action $reason Error code: $error_code" >&2
                 update_xp -5
                 echo -e "\033[0;31mFor this, you earned -5XP that means you have a total of ${xp}XP now."
