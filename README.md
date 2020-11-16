@@ -22,6 +22,15 @@ curl https://cdn.rawgit.com/pimterry/git-confirm/v0.2.1/hook.sh > .git/hooks/pre
 ```
 (*Note the version number*)
 
+or to install it globally on v2.9+, you can run:
+
+```bash
+mkdir ~/.git-hooks
+git config --global core.hooksPath ~/.git-hooks
+curl https://cdn.rawgit.com/pimterry/git-confirm/v0.2.1/hook.sh > ~/.git-hooks/pre-commit
+chmod +x ~/.git-hooks/pre-commit
+```
+
 All done. If you want to check it's installed correctly you can run:
 
 ```bash
