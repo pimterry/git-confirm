@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # If we have a STDIN, use it, otherwise get one
 if tty >/dev/null 2>&1; then
