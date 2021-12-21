@@ -18,7 +18,7 @@ Git Confirm:
 In the root of your Git repository, run:
 
 ```bash
-curl https://cdn.rawgit.com/pimterry/git-confirm/v0.2.2/hook.sh > .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
+curl -sSfL https://cdn.rawgit.com/pimterry/git-confirm/v0.2.2/hook.sh > .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
 ```
 (*Note the version number*)
 
