@@ -1,4 +1,5 @@
-# git-confirm [![Travis Build Status](https://img.shields.io/travis/pimterry/git-confirm.svg)](https://travis-ci.org/pimterry/git-confirm)
+# git-confirm [![Build Status](https://github.com/pimterry/git-confirm/workflows/CI/badge.svg)](https://github.com/pimterry/git-confirm/actions)
+
 Git hook to catch placeholders and temporary changes (TODO / @ignore) before you commit them.
 
 [![Asciicast DEMO](asciicast.gif)](https://asciinema.org/a/dc7dr433caze9f8p65bitqs77?speed=2&autoplay=1)
@@ -75,7 +76,7 @@ Want to help improve Git-Confirm?
 * Commit and push your changes
 * Open a PR!
 
-Need any ideas? Take a look at the Git Confirm [Huboard](https://huboard.com/pimterry/git-confirm#/) to quickly see the next features to look at.
+Need any ideas? Take a look at the Git Confirm [issues](https://github.com/pimterry/git-confirm/issues/) to quickly see the next features to look at.
 
 ## Release process
 
