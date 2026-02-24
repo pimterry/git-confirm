@@ -23,9 +23,8 @@ Git Confirm:
 Catches patterns in staged file diffs before you commit. In the root of your Git repository, run:
 
 ```bash
-curl -sSfL https://cdn.rawgit.com/pimterry/git-confirm/v0.2.2/hook.sh > .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
+curl -sSfL https://cdn.rawgit.com/pimterry/git-confirm/v0.3.0/hook.sh > .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
 ```
-(*Note the version number*)
 
 All done. If you want to check it's installed correctly you can run:
 
@@ -37,10 +36,15 @@ git add ./test-git-confirm
 git commit -m "Testing git confirm"
 ```
 
-*If you're security conscious, you may be reasonably suspicious of
-[curling executable files](https://www.seancassidy.me/dont-pipe-to-your-shell.html).
-Here you're on HTTPS throughout though, and you're not piping directly to execution so you can
-check contents and the hash (against MD5 9ee7ff55f7688f9055a9056bd2617a02 for v0.2.2) before using this, if you like.*
+### Pre-push hook
+
+Catches temporary commits (WIP, fixup, squash) before you push. In the root of your Git repository, run:
+
+```bash
+curl -sSfL https://cdn.rawgit.com/pimterry/git-confirm/v0.3.0/push-hook.sh > .git/hooks/pre-push && chmod +x .git/hooks/pre-push
+```
+
+You can install either or both hooks independently.
 
 ## To Configure
 
