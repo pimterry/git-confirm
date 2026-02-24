@@ -17,6 +17,9 @@ setup() {
   # Clear initial TTY input
   echo "" > $FAKE_TTY
 
+  # Isolate from user/system git config
+  export HOME=$TMP_DIRECTORY
+
   # Set up a git repo
   cd $TMP_DIRECTORY
   git init
@@ -133,7 +136,9 @@ EOF
 }
 
 @test "Complains if hooks.confirm.match is not set" {
-  run git commit --allow-empty -m "Empty commit"
+  echo "clean content" > my_file
+  git add my_file
+  run git commit -m "Clean commit"
 
   assert_success
   assert_line --partial "hooks.confirm.match not set"
@@ -141,7 +146,9 @@ EOF
 
 @test "Doesn't complain if hooks.confirm.match is set" {
   git config --add hooks.confirm.match "FIXME"
-  run git commit --allow-empty -m "Empty commit"
+  echo "clean content" > my_file
+  git add my_file
+  run git commit -m "Clean commit"
 
   assert_success
   refute_line --partial "hooks.confirm.match not set"

@@ -9,7 +9,6 @@ fi
 
 IFS=$'\n'
 
-# http://djm.me/ask
 ask() {
     while true; do
 
