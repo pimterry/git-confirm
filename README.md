@@ -23,7 +23,7 @@ Git Confirm:
 Catches patterns in staged file diffs before you commit. In the root of your Git repository, run:
 
 ```bash
-curl -sSfL https://cdn.rawgit.com/pimterry/git-confirm/v0.3.0/hook.sh > .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
+curl -sSfL https://raw.githubusercontent.com/pimterry/git-confirm/v0.3.0/hook.sh > .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
 ```
 
 All done. If you want to check it's installed correctly you can run:
@@ -41,7 +41,7 @@ git commit -m "Testing git confirm"
 Catches temporary commits (WIP, fixup, squash) before you push. In the root of your Git repository, run:
 
 ```bash
-curl -sSfL https://cdn.rawgit.com/pimterry/git-confirm/v0.3.0/push-hook.sh > .git/hooks/pre-push && chmod +x .git/hooks/pre-push
+curl -sSfL https://raw.githubusercontent.com/pimterry/git-confirm/v0.3.0/push-hook.sh > .git/hooks/pre-push && chmod +x .git/hooks/pre-push
 ```
 
 You can install either or both hooks independently.
@@ -112,7 +112,7 @@ Want to help improve Git-Confirm?
 * Check the tests pass locally: `./test.sh`
 * Add tests for your change in test/test-hook.bats
 
-  Check out the [BATS](https://github.com/sstephenson/bats) documentation if you're not familiar with it, or just crib from the existing tests.
+  Check out the [BATS](https://github.com/bats-core/bats-core) documentation if you're not familiar with it, or just crib from the existing tests.
 * Add any documentation required to this README.
 * Commit and push your changes
 * Open a PR!
